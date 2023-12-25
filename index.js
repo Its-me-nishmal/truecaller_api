@@ -16,14 +16,14 @@ const apiKeyMiddleware = (req, res, next) => {
   }
 };
 
-// API endpoint for Truecaller search
+const isValidNumber = (number) => /^\d{10}$/.test(number);
 app.get("/", apiKeyMiddleware, async (req, res) => {
   const { number } = req.query;
   const countryCode = "+91";
   const installationId = "a1i0_--jxuw8C-fF6SWKFgG6uQuZtZcIj499BlsKiimjwS96sjABiSktw750DCH0";
 
-  if (!number) {
-    return res.status(400).json({ error: "Phone number is required." });
+  if (!number || !isValidNumber(number)) {
+    return res.status(400).json({ error: "Valid 10-digit phone number is required." });
   }
 
   const searchData = {
